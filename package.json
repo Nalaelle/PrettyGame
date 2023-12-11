@@ -1,0 +1,12 @@
+{
+  "name": "morpion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run morpion": "node morpion.js",
+    "run battleship": "node battleship.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
