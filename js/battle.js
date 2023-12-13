@@ -1,7 +1,6 @@
 const msgImportant = document.getElementById('msgImportant');
 
-
-function createGrid(player, grid) {
+function createGrid(player, grid, id) {
     const gridOfDom = document.getElementById(grid);
     const letters = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
@@ -10,6 +9,11 @@ function createGrid(player, grid) {
     playerGrid.classList.add('playerGrid');
     const playerName = document.createElement('h2');
     playerName.textContent = player.name;
+    const score = document.createElement('p');
+    score.textContent = `Score : ${player.score ?? 0}`;
+    score.classList.add(`score`);
+    score.classList.add(`score${id}`);
+
     const table = document.createElement('table');
     const thead = document.createElement('thead');
     const theadRow = document.createElement('tr');
@@ -44,6 +48,7 @@ function createGrid(player, grid) {
         row.classList.add(`numRow${i - 1}`);
         tbody.appendChild(row);
     }
+    playerGrid.appendChild(score)
     table.appendChild(tbody);
     gridOfDom.appendChild(playerGrid);
     playerGrid.appendChild(playerName);
@@ -80,21 +85,6 @@ class Player {
         this.shots = shots;
         this.boatIsPlaced = boatIsPlaced;
     }
-}
-
-class Game {
-    constructor(player1, player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-    }
-
-    test() {
-        console.log(this.player1.grid);
-    }
-
-    // startGame() {
-    // turn / shot / state of the game /
-    // }
 }
 
 function getNamePlayer(namePlayerOne, namePlayerTwo) {
@@ -173,9 +163,11 @@ function placesBoat(playerGrid, player) {
                             msgImportant.textContent = `Vous devez choisir une position valide`;
                             //  TODO : gerer le cas ou on change de direction
                             // } else if (currentBoat.dir === 'horizontal' && posCol === (position[position.length - 1][1] + 1 || posCol === position[position.length - 1][1] - 1)) {
-                        } else if (currentBoat.dir === 'horizontal' && posCol === position[position.length - 1][1] + 1) {
+                            // } else if (currentBoat.dir === 'horizontal' && posCol === position[position.length - 1][1] + 1) {
+                        } else if (currentBoat.dir === 'horizontal') {
                             addPosition(posRow, posCol);
-                        } else if (currentBoat.dir === 'vertical' && posRow === position[position.length - 1][0] + 1) {
+                            // } else if (currentBoat.dir === 'vertical' && posRow === position[position.length - 1][0] + 1) {
+                        } else if (currentBoat.dir === 'vertical') {
                             addPosition(posRow, posCol);
                         } else {
                             msgImportant.textContent = `Vous devez choisir une position valide`;
@@ -194,18 +186,188 @@ function placesBoat(playerGrid, player) {
     return player.boatIsPlaced;
 }
 
-function shot() {
-    // TODO : implementer la fonction de tir
+let gridTest = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 0
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 1
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 2
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 3
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 4
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 5
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 6
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 7
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 8
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 9
+]
+const generateRandomPosition = (size, grid) => {
+    const random = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    const dir = Math.random() < 0.5 ? 'horizontal' : 'vertical';
+    let row, col = 0;
+    let temp = [];
+    if (dir === 'horizontal') {
+        row = random(1, 10 - size);
+        col = random(1, 10 - size);
+    } else {
+        row = random(1, 10 - size);
+        col = random(1, 10 - size);
+    }
+    const newPos = () => {
+        temp = [];
+        for (let i = 0; i < size; i++) {
+            if (dir === 'horizontal') {
+                col = row + (size - i) // equals to row - decrement de 1
+                temp.push([row, col])
+            } else {
+                row = col + (size - i) // equals to col - decrement de 1
+                temp.push([row, col])
+            }
+        }
+        return temp;
+    }
+    newPos()
+    let stopLoop = 0;
 
-    // tirer sur la grille adverse
-    // verifier si touché ou pas
-    // si touché, verifier si bateau coulé
-    // si bateau coulé, verifier si tous les bateaux sont coulés
-    // si tous les bateaux sont coulés, fin de partie
-    // si pas tous les bateaux sont coulés, continuer à jouer
+// TODO : souvent des erreurs de placement + boucle infinis
+    function insertTempInGrid(temp) {
+        console.log('temp', temp)
+        for (let i = 0; i < temp.length; i++) {
+            console.log(stopLoop)
+            let [row, col] = temp[i];
+            if (gridTest[row - 1][col - 1] === 0) {
+                gridTest[row - 1][col - 1] = 1;
+            } else {
+                stopLoop = stopLoop + 1;
+                console.log('NO ', stopLoop)
+                if (stopLoop > 100) {
+                    console.log('stop')
+                    return msgImportant.textContent = `Une erreur est survenue, veuillez réessayer`;
+                }
+                newPos()
+                insertTempInGrid(temp)
+            }
+        }
+        // console.log('grid', gridTest)
+        return temp;
+    }
 
+    insertTempInGrid(temp)
+    if (temp.length > 0) {
+        return temp;
+    } else {
+        newPos()
+        insertTempInGrid(temp)
+    }
+};
 
+const placesBoatRandom = (grid, player) => {
+    const boats = [
+        {name: "Porte-avion", size: 5, letter: 'P'},
+        {name: "Croiseur", size: 4, letter: 'C'},
+        {name: "Sous-marin", size: 3, letter: 'S'},
+        {name: "Torpilleur", size: 2, letter: 'T'}
+    ];
+    for (let boat of boats) {
+        const position = generateRandomPosition(boat.size, grid);
+        player.boats.push(new Boat(boat.name, boat.size, boat.letter, position, '', true, false));
+
+        for (let pos of position) {
+            const [row, col] = pos;
+            const cell = grid.querySelector(`.numRow${row - 1} .numCell${col - 1}`);
+            cell.textContent = boat.letter;
+            cell.classList.add(`boat${boat.letter}${player.id}`);
+        }
+    }
 }
+
+// TODO NE FONCTIONNE PAS
+function checkWin(playerShooter, playerTarget, score) {
+    let check = 0;
+    let size = -1;
+    playerTarget.boats.map(boat => {
+        if (boat.position.includes(0)) {
+            for (let i of boat.position) {
+                if (i === 0) {
+                    check = check + 1;
+                    size = boat.size;
+                    if (check === size) {
+                        return check = 10;
+                    }
+                }
+            }
+        }
+    })
+    if (check === 10) {
+        msgImportant.textContent = `Vous avez coulé un bateau`;
+        playerShooter.score = playerShooter.score + 1;
+        score.textContent = `Score : ${playerShooter.score}`;
+    }
+}
+
+// function fin de partie
+function endOfGame(player, score) {
+    if (player.score === 14) {
+        msgImportant.textContent = `Vous avez gagné`;
+        score.textContent = `Score : ${player.score}`;
+    } else {
+        console.log('la partie continue')
+        score.textContent = `Score : ${player.score}`;
+    }
+}
+
+function shot(playerShooter, playerTarget, gridOfTarget) {
+    let turn = 1;
+    let score = document.querySelector(`.score${playerShooter.id}`);
+    let positionBoatOfTarget = playerTarget.boats.map(boat => boat.position);
+    // let stateOfShot = 0;
+    let shotedBoat = [];
+    // state of the shot = pas tirer / raté / touché / coulé / gagné
+    // 0, 1, 2, 3, 4
+// TODO // score  // gestion du tour de jeu // gestion de la fin de partie
+    gridOfTarget.addEventListener('click', function (event) {
+        const cell = event.target;
+        if (cell.classList.contains('cell') && turn === 1) {
+            // position du tir
+            let posRow = parseInt(cell.parentElement.classList[0].slice(-1)) + 1;
+            let posCol = parseInt(cell.classList[2].slice(-1)) + 1;
+            const pos = [posRow, posCol];
+            cell.textContent = 'X';
+            console.log(posRow, posCol)
+            // iteration bateau
+            for (let i in positionBoatOfTarget) { // i = index bateau
+                for (let j in positionBoatOfTarget[i]) { // j = index position
+                    if (pos[0] === positionBoatOfTarget[i][j][0] && pos[1] === positionBoatOfTarget[i][j][1]) {
+                        positionBoatOfTarget[i][j][0] = 0;
+                        positionBoatOfTarget[i][j][1] = 0;
+                        shotedBoat.push(parseInt(i), parseInt(j));
+                        // touché
+                    }
+                    // rater
+                }
+            }
+            if (shotedBoat.length > 0) {
+                // TODO : suppr console.log
+                console.log(playerTarget.boats[shotedBoat[0]].name)
+
+                playerTarget.boats[shotedBoat[0]].position[shotedBoat[1]] = 0;
+                playerShooter.score = playerShooter.score + 1;
+                score.textContent = `Score : ${playerShooter.score}`;
+                msgImportant.textContent = `Vous avez touché un bateau`;
+
+            } else {
+                msgImportant.textContent = `Vous avez Raté`;
+            }
+            console.log(shotedBoat)
+            endOfGame(playerShooter, score)
+            return turn = 0;
+        }
+    })
+}
+
+
+// si bateau coulé, verifier si tous les bateaux sont coulés
+// si tous les bateaux sont coulés, fin de partie
+// si pas tous les bateaux sont coulés, continuer à jouer
 
 function play() {
     let namePlayerOne = "Amélie";
@@ -213,8 +375,8 @@ function play() {
     // const btnPlay = document.getElementById('btnPlay');
     // btnPlay.addEventListener('click', getNamePlayer(namePlayerOne, namePlayerTwo))
 
-    createGrid({name: namePlayerOne}, 'gridPlayerOne');
-    createGrid({name: namePlayerTwo}, 'gridPlayerTwo');
+    createGrid({name: namePlayerOne}, 'gridPlayerOne', 1);
+    createGrid({name: namePlayerTwo}, 'gridPlayerTwo', 2);
 
     let playerOne = new Player(1, namePlayerOne, 0, [], [], false);
     let playerTwo = new Player(2, namePlayerTwo, 0, [], [], false);
@@ -234,8 +396,6 @@ function play() {
         }
         placesBoat(userGridOne, playerOne)
         playerOne.boatIsPlaced = true;
-        // playerTwo.boatIsPlaced = false;
-        // console.log(playerOne, playerTwo)
     });
     btnPlaceBoatTwo.addEventListener('click', function () {
         if (!playerOne.boatIsPlaced) {
@@ -248,37 +408,55 @@ function play() {
         placesBoat(userGridTwo, playerTwo)
     });
 
+    /************************
+     TODO:
+     probleme de position des bateau
+     verification du gagnant coulé
 
+
+     ***********************/
+    const btnRandomBoatsOne = document.getElementById('btnRandomBoat_One');
+    const btnRandomBoatsTwo = document.getElementById('btnRandomBoat_Two');
     const btnShotOne = document.getElementById('btnShot_One');
     const btnShotTwo = document.getElementById('btnShot_Two');
 
-    if (playerOne.boatIsPlaced && playerTwo.boatIsPlaced) {
-        msgImportant.textContent = `Vous pouvez commencer à jouer ${playerOne.name} et ${playerTwo.name}`;
+    btnRandomBoatsOne.addEventListener('click', (event) => {
+        placesBoatRandom(userGridOne, playerOne);
+        playerOne.boatIsPlaced = true;
+        if (playerOne.boatIsPlaced && playerTwo.boatIsPlaced) {
+            msgImportant.textContent = `Vous pouvez commencer à jouer ${playerOne.name} et ${playerTwo.name}`;
+            start()
+        }
+    })
+    btnRandomBoatsTwo.addEventListener('click', () => {
+        placesBoatRandom(userGridTwo, playerTwo);
+        playerTwo.boatIsPlaced = true;
+        if (playerOne.boatIsPlaced && playerTwo.boatIsPlaced) {
+            msgImportant.textContent = `Vous pouvez commencer à jouer ${playerOne.name} et ${playerTwo.name}`;
+            start()
+        }
+    });
 
-        btnShotOne.addEventListener('click', function () {
-            shot();
-        });
-        btnShotTwo.addEventListener('click', function () {
-            shot();
-        });
+    const start = () => {
+        if (playerOne.boatIsPlaced && playerTwo.boatIsPlaced) {
+            msgImportant.textContent = `Vous pouvez commencer à jouer ${playerOne.name} et ${playerTwo.name}`;
+
+            btnShotOne.addEventListener('click', function () {
+                shot(playerOne, playerTwo, userGridTwo);
+                if (playerOne.score !== 14) {
+                    start()
+                }
+            });
+
+            btnShotTwo.addEventListener('click', function () {
+                shot(playerTwo, playerOne, userGridOne);
+                if (playerOne.score !== 14) {
+                    start()
+                }
+            });
+
+        }
     }
-
-    // implement le tour de jeu
-    // let turnOfPlayerOne = true;
-    // const turn = () => {
-    //     if (turnOfPlayerOne) {
-    //         console.log('p1')
-    //         turnOfPlayerOne = false;
-    //         return playerOne;
-    //     } else {
-    //         console.log('p2')
-    //         turnOfPlayerOne = true;
-    //         return playerTwo;
-    //     }
-    // }
-    // placesBoat(userGridTwo, playerTwo)
-    // const game = new Game(playerOne, playerTwo);
-    // game.test();
 }
 
 play();
@@ -291,131 +469,3 @@ play();
 * - Gestion de la fin de partie
 *
  */
-
-
-// placesBoat(userGridTwo, boats[2].letter)
-
-// btn placeboat
-//  const btnPlaceBoat = document.getElementsByClassName('btnPlaceBoat');
-//  btnPlaceBoat.addEventListener('click', function(event){
-//      // playerOne.placeBoat();
-//      console.log(event.target)
-//      // placesBoat(userGridOne, playerOne.boats[0])
-//  });
-
-
-// playerOne.grid.A[2] = 'X';
-// console.log(playerOne.grid.A[2]);
-// console.log(playerOne.grid);
-// playerOne.placeBoat();
-// console.log(playerOne.placeBoat());
-// const boats = ["Porte-avion", "Croiseur", "Contre-torpilleur", "Sous-marin", "Torpilleur"]
-// const boats = {
-//     "Porte-avion" : 5,
-//     "Croiseur" : 4,
-//     "Contre-torpilleur" : 3,
-//     "Sous-marin" : 3,
-//     "Torpilleur" : 2
-// }
-// {name:"Porte-avion", size: 5, letter: 'P', position: [], dir: "horizontal", isPlaced: false, isTouched: false},
-
-
-// console.log(boat)
-// console.log(event.target.textContent);
-// const position = event.target.textContent;
-//    console.log(position);
-
-
-// event.target.classList.add('selected');
-// console.log(event.target);
-// console.log(event.target.classList.contains('cell'));
-
-
-//**
-// event.target.textContent = currentBoat.letter;
-// event.target.classList.add(`boat${boat.letter}${id}`);
-// console.log(position)
-// position.push(event.target.textContent);
-//     if(position.length === currentBoat.size){
-//         currentBoat.position = position;
-//         console.log('c', currentBoat)
-//         position = [];
-//         checkPosBoat();
-//     }
-//     if(position.length < boat.size){
-//         position.push(event.target.textContent);
-//         console.log('p',position);
-//     }
-
-
-// if (event.target.classList.contains('cell')){
-//     if(position.length < currentBoat.size  && currentBoat.position.length < currentBoat.size){ // && currentBoat.position.length < currentBoat.size
-//         if(event.target.textContent !== '') {
-//             console.log(event.target.textContent, typeof event.target.textContent)
-//             alert('cette case est déjà prise')
-//         }else{
-//             event.target.textContent = currentBoat.letter;
-//             event.target.classList.add(`boat${boat.letter}${id}`);
-//             position.push(event.target.textContent);
-//             // console.log('p', position);
-//         }
-//     }
-//     else if (position.length === currentBoat.size && currentBoat.position.length === 0){
-//         currentBoat.position = position;
-//         position = [];
-//         checkPosBoat();
-//         // console.log('p',position);
-//     }
-// }
-
-
-// function placesBoat(playerGrid, boat, id){
-//     const msg = playerGrid.firstElementChild
-//     let position = [];
-//     let currentBoat = boat[0];
-//     let stateofPositon = false;
-//     const checkPosBoat = ()=>{
-//         for(let i of boat){
-//             if(i.position.length !== i.size){
-//                 msg.textContent = `Vous devez placez vos bateaux. Placez le : ${i.name} il doit contenir ${i.size} cases.`;
-//                 currentBoat = i;
-//                 break;
-//             }
-//         }
-//         if(boat[3].position.length === 2) {
-//             msg.textContent = `Vous avez placez tous vos bateaux`;
-//             stateofPositon = true;
-//         }
-//     }
-//     checkPosBoat();
-//
-//     playerGrid.addEventListener('click', function(event ){
-//         console.log(currentBoat.name, currentBoat.size)
-//         const cell = event.target;
-//         if (cell.classList.contains('cell')){
-//             if(position.length < currentBoat.size  && currentBoat.position.length < currentBoat.size){
-//                 if(cell.textContent === 'P' || cell.textContent === 'C' || cell.textContent === 'S' || cell.textContent === 'T') {
-//                     alert('cette case est déjà prise')
-//                 }
-//                 else {
-//                     cell.textContent = currentBoat.letter;
-//                     cell.classList.add(`boat${currentBoat.letter}${id}`);
-//                     position.push(cell.textContent);
-//                     // console.log('p', position);
-//                 }
-//             }
-//             else if (position.length === currentBoat.size && currentBoat.position.length === 0){
-//                 currentBoat.position = position;
-//                 position = [];
-//                 checkPosBoat();
-//                 // console.log('p',position);
-//             }
-//         }
-//
-//     })
-//
-//     if(stateofPositon){
-//         msg.textContent = `Vous pouvez commencer à jouer`;
-//         playerGrid
-//     }
-// }
