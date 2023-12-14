@@ -58,6 +58,10 @@ main, header {
     padding: 10px 30px;
 }
 
+main {
+    height: 100vh;
+}
+
 .menu > ul {
     display: flex;
 
