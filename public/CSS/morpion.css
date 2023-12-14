@@ -30,3 +30,21 @@
     font-weight: bold;
     margin-bottom: 20px;
 }
+
+.btn {
+    display: inline;
+    font-size: 14px;
+    padding: 10px;
+    cursor: pointer;
+    color: #FFF;
+    justify-content: center;
+    background: rgba(107, 40, 183, 0.85);
+    border: none;
+    border-radius: 25px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+    background: rgba(138, 80, 210, 0.65);
+    box-shadow: 3px 3px 2px 2px rgba(0, 0, 0, 0.2);
+}
