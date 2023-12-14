@@ -18,11 +18,19 @@ ul {
 
 .bloc-page {
     overflow-x: clip;
+    background: linear-gradient(#9198e5, #fafafa);
 }
 
+
+/*header {*/
+/*    display: flex;*/
+/*    background: #9d9b9b;*/
+/*}*/
+
+
 .logo {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     background-color: #000;
     display: flex;
     justify-content: center;
@@ -34,3 +42,49 @@ img {
     height: 100%;
     object-fit: cover;
 }
+
+main, header {
+    /*margin: 10px;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headBar {
+    display: flex;
+    background: linear-gradient(#9198e5, #edf0f1);
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 30px;
+}
+
+.menu > ul {
+    display: flex;
+
+}
+
+.menu > ul > li {
+    margin: 15px;
+    font-weight: bold;
+}
+
+.menu > ul > li:hover {
+    /*color: #073ca6;*/
+    color: rgba(107, 40, 183, 0.85);
+}
+
+
+/*.logo {*/
+/*    width: 200px;*/
+/*    height: 200px;*/
+/*    background-color: #000;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+
+/*img {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    object-fit: cover;*/
+/*}*/

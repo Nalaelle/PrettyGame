@@ -1,3 +1,14 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    /*background: linear-gradient(#edf0f1, #48aec0, #050e4f);*/
+    background: linear-gradient(#edf0f1, #48aec0, #1156a2, #183d8c, #050e4f);
+}
+
 #playerOne,
 #playerTwo {
     height: 500px;
@@ -19,9 +30,10 @@ table {
 
 th,
 td {
-    border: 1px solid black;
+    border: 2px solid #e3dada;
     padding: 8px;
     text-align: center;
+    color: #e3dada;
 }
 
 .cell:hover {
@@ -31,14 +43,18 @@ td {
 .case {
     width: 30px;
     height: 30px;
+    max-height: 30px;
+    max-width: 30px;
+    /*box-sizing: unset;*/
 }
 
 #gridPlayerOne > span,
 #gridPlayerTwo > span, .btn {
     display: flex;
-    font-size: small;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    font-size: 14px;
+    margin: 10px;
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
     background: rgba(30, 115, 229, 0.65);
     border: none;
     padding: 10px;
@@ -46,17 +62,14 @@ td {
 }
 
 .btn {
-    display: flex;
+    display: inline;
     cursor: pointer;
-    font-size: small;
     color: #FFF;
     justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px;
     background: rgba(107, 40, 183, 0.85);
     border: none;
     border-radius: 25px;
-    min-width: 150px;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -65,11 +78,19 @@ td {
     box-shadow: 3px 3px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-.score {
-    width: 100%;
-    margin: 15px;
-    color: #b006c7;
-    font-size: 1.5em;
-    text-align: center;
-    font-weight: bold;
+/*.score {*/
+/*    width: 100%;*/
+/*    margin: 15px;*/
+/*    color: #b006c7;*/
+/*    font-size: 1.5em;*/
+/*    text-align: center;*/
+/*    font-weight: bold;*/
+/*}*/
+
+.playerGrid {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

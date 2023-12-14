@@ -1,18 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Morpion</title>
-    <link rel="stylesheet" href="../public/CSS/style.css" />
-    <link rel="stylesheet" href="../public/CSS/morpion.css" />
+    <link rel="stylesheet" href="../public/CSS/style.css"/>
+    <link rel="stylesheet" href="../public/CSS/morpion.css"/>
+    <script src="../js/morpion.js"></script>
 </head>
 <body>
-    <div id="playerOne">
-        <h2>Joueur 1</h2>
+<header>
+    <div class="headBar">
+        <div class="title">
+            <h1>Morpion</h1>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="../pages/morpion.html">Morpion</a></li>
+                <li><a href="../pages/battle.html">Battle</a></li>
+            </ul>
+        </div>
     </div>
-    <div d="playerTwo">
-        <h2>Joueur 2</h2>
+    <!--    <div class="logo">-->
+    <!--        <img src="../public/assets/logo.jpg" alt="logo"/>-->
+    <!--    </div>-->
+</header>
+<main>
+    <div class="container">
+        <h1>Morpion</h1>
+        <div class="board" id="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+        <div id="status"></div>
+        <button id="restart-btn">Jouer</button>
     </div>
+</main>
 </body>
 </html>

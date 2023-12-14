@@ -12,25 +12,24 @@
 </head>
 <body>
 <header>
-    <div class="logo">
-        <img src="../public/assets/logo.jpg" alt="logo"/>
+    <div class="headBar">
+        <div class="title">
+            <h1>Battaille Navale</h1>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="../pages/morpion.html">Morpion</a></li>
+                <li><a href="../pages/battle.html">Battle</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="title">
-        <h1>Battaille Navale</h1>
-    </div>
-    <div class="menu">
-        <ul>
-            <li><a href="../index.html">Accueil</a></li>
-            <li><a href="../pages/morpion.html">Morpion</a></li>
-            <li><a href="../pages/battle.html">Battle</a></li>
-        </ul>
-    </div>
+    <!--    <div class="logo">-->
+    <!--        <img src="../public/assets/logo.jpg" alt="logo"/>-->
+    <!--    </div>-->
 </header>
 <main>
     <div id="board">
-        <div id="btnPlay">
-            button
-        </div>
         <div>
             <h4>Ici apparait un message pour vous guider</h4>
             <p id="msgImportant"></p>
@@ -40,27 +39,25 @@
     <div id="grid">
         <div id="gridPlayerOne">
             <span id="msgPlayerOne"></span>
-            <button id="btnPlaceBoat_One" class="btn">Placer mes bateaux</button>
-            <button id="btnShot_One" class="btn">Tirer</button>
-            <!--            <button id="btnHide_One" class="btn">Cacher</button>-->
+            <button id="btnPlaceBoat_One" class="btn" title="Placer vos bateaux">Placer</button>
+            <button id="btnShot_One" class="btn" title="Tirer sur la grille de l'adversaire">Tirer</button>
+            <button id="btnHide_One" class="btn" title="Voir ou cacher vos bateaux">Voir
+            </button>
             <!--    Laisser ici         -->
-            <button id="btnRandomBoat_One" class="btn">Bateau aléatoire</button>
+            <button id="btnRandomBoat_One" class="btn" title="Placer les bateaux aléatoirement">Random</button>
         </div>
         <div id="gridPlayerTwo">
             <span id="msgPlayerTwo"></span>
-            <button id="btnPlaceBoat_Two" class="btn">Placer mes bateaux</button>
-            <button id="btnShot_Two" class="btn">Tirer</button>
-            <!--            <button id="btnHide_Two" class="btn">Cacher</button>-->
+            <button id="btnPlaceBoat_Two" class="btn" title="Placer vos bateaux">Placer</button>
+            <button id="btnShot_Two" class="btn" title="Tirer sur la grille de l'adversaire">Tirer</button>
+            <button id="btnHide_Two" class="btn" title="Voir ou cacher vos bateaux">Voir
+            </button>
             <!--   Laisser ici         -->
-            <button id="btnRandomBoat_Two" class="btn">Bateau aléatoire</button>
-
+            <button id="btnRandomBoat_Two" class="btn" title="Placer les bateaux aléatoirement">Random</button>
         </div>
     </div>
-    <div id="btn">
-
+    <div>
         <button id="btnReset" class="btn">Reset</button>
-        <!--        <button id="btnShow">Afficher</button>-->
-
     </div>
 </main>
 </body>

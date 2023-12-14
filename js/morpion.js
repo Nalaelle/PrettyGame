@@ -1,75 +1,59 @@
-function afficherPlateau(plateau) {
-    for (let i = 0; i < 3; i++) {
-        console.log(plateau[i].join('|'));
-        if (i < 2) {
-            console.log('-----');
+document.addEventListener("DOMContentLoaded", function () {
+    const board = document.getElementById('board');
+    const cells = document.querySelectorAll('.cell');
+    const status = document.getElementById('status');
+    const restartBtn = document.getElementById('restart-btn');
+
+    let currentPlayer = 'X';
+    let gameActive = true;
+    let gameState = ['', '', '', '', '', '', '', '', ''];
+    const winConditions = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+    ];
+
+    const checkWin = () => {
+        for (let condition of winConditions) {
+            const [a, b, c] = condition;
+            if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+                gameActive = false;
+                return gameState[a];
+            }
         }
-    }
-}
 
-function verifierVictoire(plateau, symbole) {
-    // Vérification des lignes et colonnes
-    for (let i = 0; i < 3; i++) {
-        if ((plateau[i][0] === symbole && plateau[i][1] === symbole && plateau[i][2] === symbole) ||
-            (plateau[0][i] === symbole && plateau[1][i] === symbole && plateau[2][i] === symbole)) {
-            return true;
+        if (!gameState.includes('')) {
+            gameActive = false;
+            return 'Equals';
         }
-    }
-    // Vérification des diagonales
-    if ((plateau[0][0] === symbole && plateau[1][1] === symbole && plateau[2][2] === symbole) ||
-        (plateau[0][2] === symbole && plateau[1][1] === symbole && plateau[2][0] === symbole)) {
-        return true;
-    }
-    return false;
-}
 
-function jouerMorpion() {
-    const plateau = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
-    const symboles = ['X', 'O'];
-    let tour = 0;
-    let jeuEnCours = true;
+        return null;
+    };
 
-    while (jeuEnCours) {
-        afficherPlateau(plateau);
-        const symbole = symboles[tour % 2];
-        console.log(`C'est au tour du joueur ${symbole}`);
+    const handleCellClick = (e) => {
+        const index = e.target.dataset.index;
+        if (gameState[index] === '' && gameActive) {
+            gameState[index] = currentPlayer;
+            e.target.textContent = currentPlayer;
+            const winner = checkWin();
+            if (winner) {
+                status.textContent = winner === 'Equals' ? 'Dommage!' : `Joueur ${winner} à gagné!`;
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                status.textContent = `c'est à joueur ${currentPlayer}`;
+            }
+        }
+    };
 
-        const readline = require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout
+    cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+
+    restartBtn.addEventListener('click', () => {
+        currentPlayer = 'X';
+        gameActive = true;
+        gameState = ['', '', '', '', '', '', '', '', ''];
+        status.textContent = `c'est à joueur ${currentPlayer}`;
+        cells.forEach(cell => {
+            cell.textContent = '';
         });
-
-        readline.question('Choisissez la ligne (0, 1, ou 2) : ', (ligne) => {
-            readline.question('Choisissez la colonne (0, 1, ou 2) : ', (colonne) => {
-                const ligneNum = parseInt(ligne);
-                const colonneNum = parseInt(colonne);
-
-                if (plateau[ligneNum][colonneNum] === ' ') {
-                    plateau[ligneNum][colonneNum] = symbole;
-                    if (verifierVictoire(plateau, symbole)) {
-                        afficherPlateau(plateau);
-                        console.log(`Le joueur ${symbole} a gagné !`);
-                        jeuEnCours = false;
-                        readline.close();
-                    } else if (tour === 8) {
-                        afficherPlateau(plateau);
-                        console.log('Match nul !');
-                        jeuEnCours = false;
-                        readline.close();
-                    } else {
-                        tour++;
-                    }
-                } else {
-                    console.log('Cette case est déjà remplie. Choisissez une autre case.');
-                }
-
-                if (jeuEnCours) {
-                    readline.close();
-                    jouerMorpion();
-                }
-            });
-        });
-    }
-}
-
-jouerMorpion();
+    });
+});
