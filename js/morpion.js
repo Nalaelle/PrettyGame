@@ -4,15 +4,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const status = document.getElementById('status');
     const restartBtn = document.getElementById('restart-btn');
 
+    // Initialisation du jeu
+    // X commence
     let currentPlayer = 'X';
     let gameActive = true;
     let gameState = ['', '', '', '', '', '', '', '', ''];
+    // Conditions de victoire
     const winConditions = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
         [0, 3, 6], [1, 4, 7], [2, 5, 8],
         [0, 4, 8], [2, 4, 6]
     ];
 
+    // Vérification du gagnant
     const checkWin = () => {
         for (let condition of winConditions) {
             const [a, b, c] = condition;
@@ -21,15 +25,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 return gameState[a];
             }
         }
-
         if (!gameState.includes('')) {
             gameActive = false;
             return 'Equals';
         }
-
         return null;
     };
 
+    // Gestion du clic sur une cellule
     const handleCellClick = (e) => {
         const index = e.target.dataset.index;
         if (gameState[index] === '' && gameActive) {
@@ -45,8 +48,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    // Gestion des événements
     cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 
+    // Recommencer la partie
     restartBtn.addEventListener('click', () => {
         currentPlayer = 'X';
         gameActive = true;

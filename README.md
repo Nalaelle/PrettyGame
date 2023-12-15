@@ -1,41 +1,26 @@
 # Bienvenue sur ce projet
 
 ## Objectifs :
+
 Vous avez deux jeux, un morpion et une bataille navale.
 
+### Auteures : Bayane Aoudia et Nathaëlle Gautier
 
 ## Comment jouer :
-Pour la bataille navale vous devez positioner vous bateau 
+
+Pour la bataille navale vous devez positioner vous bateau
 entrez le nom des joueur et positionner vos bateaux
 
-/*
 Logique du jeu de plateau
 
 2 joueurs
-plateau 10x9
-chaque joueur a 5 navires
-taille des navires : 1, 2, 3, 4, 5
-chaque joueur a 5 tirs // pas sure
+plateau 10x10
 
-afficher le score
-afficher le nom du joueur
+Chaque joueur a 5 navires, il faut cliquer sur les boutons pour jouer
+et lire les messages qui vous sont destinés
 
-1 grille pour les navire de chaque joueur
-1 grille pour les tirs de chaque joueur
+Vous pouvez placer les navires aléatoirement sur la grille ou choisir leurs positions
 
-placer les navires aléatoirement sur la grille ou placer par l'utilisateur (pas sure)
+Le code du morpion est Il vérifie les possibilité de victoire et affiche le gagnant
 
-une classe pour les grilles de positionnement des navires
-une classe pour les grilles de tirs
-instancier les grilles pour chaque joueur
-
-une classe pour les navires
-instancier les navires pour chaque joueur
-
-une classe pour les joueurs
-instancier les joueurs
-
-une classe pour le jeu
-instancier le jeu
-
-*/
+Le code de la bataille naval utilise la programmation Objet et la programmation fonctionnelle
