@@ -1,4 +1,5 @@
 const msgImportant = document.getElementById('msgImportant');
+let endGame = false;
 
 function createGrid(player, grid, id) {
     const gridOfDom = document.getElementById(grid);
@@ -168,13 +169,53 @@ class Player {
     }
 }
 
+
+function placesBoatByHand(playerGrid, player) {
+    // const direction = prompt('Entrez H pour horizontal ou V pour vertical')
+    let currentBoat = player.boats[0];
+    let allBoatIsPlaced = false;
+    const checkCurrentBoat = () => {
+        for (let i of player.boats) {
+            if (i.position.length !== i.size) {
+                currentBoat = i;
+                break;
+            }
+        }
+        if (player.boats[player.boats.length - 1].isPlaced) {
+            allBoatIsPlaced = true
+        }
+    }
+    checkCurrentBoat();
+
+    playerGrid.addEventListener('click', function (event) {
+        const cell = event.target;
+        if (cell.classList.contains('cell') && !allBoatIsPlaced) {
+            let row = parseInt(cell.parentElement.classList[0].slice(-1));
+            let col = parseInt(cell.classList[2].slice(-1));
+            const isHorizontal = Math.random() < 0.5; // Direction aléatoire
+
+            if (player.checkDir(row, col, currentBoat.size, isHorizontal)) {
+                player.placeShip(row, col, currentBoat.size, isHorizontal, currentBoat.letter)
+                currentBoat.position = player.getShipPositions(row, col, currentBoat.size, isHorizontal)
+                currentBoat.isPlaced = true
+                currentBoat.dir = isHorizontal ? 'H' : 'V';
+                checkCurrentBoat();
+                hideBoat(playerGrid, player, false)
+
+            } else {
+                return console.log('position passe pas')
+            }
+        }
+    })
+}
+
 function checkFlow(playerTarget, letterOfCurrentBoat) {
     playerTarget.boats.map((elt) => {
         if (elt.letter === letterOfCurrentBoat) {
             elt.isTouched = elt.isTouched + 1
-            console.log(elt.name, elt.isTouched)
+            // console.log(elt.name, elt.isTouched)
             if (elt.isTouched === elt.size) {
-                console.log('coulé')
+                // console.log('coulé')
                 msgImportant.textContent = `Vous avez Coulé un bateau`;
                 return true
             }
@@ -190,7 +231,7 @@ function checkTargetShot(pos, playerTarget) {
         for (let j in playerTarget.gridofPos[i]) {
             const test = [parseFloat(i), parseInt(j)]
             if (playerTarget.gridofPos[i][j] !== 0 && (test[0] === pos[0] && test[1] === pos[1])) {
-                console.log('Touché la cible')
+                // console.log('Touché la cible')
                 return playerTarget.gridofPos[i][j]
             }
         }
@@ -230,12 +271,13 @@ function shot(playerShooter, playerTarget, gridOfTargetDom) {
 
             // Fin de partie
             if (playerShooter.score === 17) {
+                endGame = true
                 return msgImportant.textContent = `Bravo ${playerShooter.name} vous avez Gagné !!!`;
             }
             return playerShooter.score;
         }
         turn = 0
-        console.log('mauvais click')
+        // console.log('mauvais click')
     })
     return turn
 }
@@ -263,10 +305,8 @@ function hideBoat(grid, player, hideBoatOne) {
 }
 
 function play() {
-    let namePlayerOne = "Amélie";
-    let namePlayerTwo = "Marie";
-    // let namePlayerOne = prompt('Entrez votre nom Joueur 1') ?? 'Joueur1'
-    // let namePlayerTwo = prompt('Entrez votre nom Joueur 2') ?? 'Joueur2'
+    let namePlayerOne = prompt('Entrez votre nom Joueur 1') ?? 'Joueur1'
+    let namePlayerTwo = prompt('Entrez votre nom Joueur 2') ?? 'Joueur2'
 
     // ** INSTANCES GAMES  ** //
     createGrid({name: namePlayerOne}, 'gridPlayerOne', 1);
@@ -303,28 +343,28 @@ function play() {
     btnPlaceBoatOne.addEventListener('click', function () {
         if (playerOne.boatIsPlaced) return msgImportant.textContent = `Vous avez déjà des bateaux ${playerOne.name}`;
         for (let boat of boats) {
-            playerOne.boats.push(new Boat(boat.name, boat.size, boat.letter, boat.position, boat.dir, boat.isPlaced, boat.isTouched))
+            playerOne.boats.push(new Boat(boat.name, boat.size, boat.letter, [], boat.dir, boat.isPlaced, boat.isTouched))
         }
         placesBoatByHand(userGridOne, playerOne)
         playerOne.boatIsPlaced = true;
         hideBoat(userGridOne, playerOne, false)
+        start()
     });
     btnPlaceBoatTwo.addEventListener('click', function () {
-        if (!playerTwo.boatIsPlaced) return msgImportant.textContent = `Vous avez déjà des bateaux ${playerTwo.name}`;
+        if (playerTwo.boatIsPlaced) return msgImportant.textContent = `Vous avez déjà des bateaux ${playerTwo.name}`;
         for (let boat of boats) {
-            playerTwo.boats.push(new Boat(boat.name, boat.size, boat.letter, boat.position, boat.dir, boat.isPlaced, boat.isTouched))
+            playerTwo.boats.push(new Boat(boat.name, boat.size, boat.letter, [], boat.dir, boat.isPlaced, boat.isTouched))
         }
         placesBoatByHand(userGridTwo, playerTwo)
         playerTwo.boatIsPlaced = true
         hideBoat(userGridTwo, playerTwo, false)
+        start()
     });
 
     /************************
      TODO:
-     verifier positionnement des bateaux manuel
      verifier et modifier l'affichage des message   -> si j'ai le temps popover
      ajouter la torpille
-
      gere apres gagné desactiver les tir ?
 
      ***********************/
@@ -372,14 +412,16 @@ function play() {
 
     // ** START SHOT  ** // TODO : tour ok mais désactiver pour la suite des tests
     const start = () => {
+        if (endGame) return msgImportant.textContent = `La partie est terminée ! `;
         if (playerOne.boatIsPlaced && playerTwo.boatIsPlaced) {
-            // playerOne.myTurn = true
+            playerOne.myTurn = true
             btnShotOne.addEventListener('click', function () {
                 // if (playerOne.myTurn) {
+                if (endGame) return msgImportant.textContent = `La partie est terminée ! `;
                 msgImportant.textContent = `C'est ${playerOne.name} qui tire`;
                 shot(playerOne, playerTwo, userGridTwo)
-                // playerOne.myTurn = false;
-                // playerTwo.myTurn = true;
+                playerOne.myTurn = false;
+                playerTwo.myTurn = true;
                 // } else {
                 //     msgImportant.textContent = `C'est le tour de ${playerTwo.name}`;
                 // }
@@ -387,10 +429,11 @@ function play() {
             })
             btnShotTwo.addEventListener('click', function () {
                 // if (playerTwo.myTurn) {
+                if (endGame) return msgImportant.textContent = `La partie est terminée ! `;
                 msgImportant.textContent = `C'est ${playerTwo.name} qui tire`;
                 shot(playerTwo, playerOne, userGridOne)
-                // playerOne.myTurn = true;
-                // playerTwo.myTurn = false;
+                playerOne.myTurn = true;
+                playerTwo.myTurn = false;
                 // } else {
                 //     msgImportant.textContent = `C'est le tour de ${playerOne.name}`;
                 // }
