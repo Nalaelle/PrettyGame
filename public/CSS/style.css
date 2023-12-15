@@ -43,23 +43,9 @@ img {
     object-fit: cover;
 }
 
-main, header {
-    /*margin: 10px;*/
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.headBar {
-    display: flex;
-    background: linear-gradient(#9198e5, #edf0f1);
-    justify-content: space-between;
-    width: 100%;
-    padding: 10px 30px;
-}
 
 main {
-    height: 100vh;
+    height: 140vh;
 }
 
 .menu > ul {
@@ -68,7 +54,7 @@ main {
 }
 
 .menu > ul > li {
-    margin: 15px;
+    margin: 20px;
     font-weight: bold;
 }
 

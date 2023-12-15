@@ -1,3 +1,23 @@
+main {
+    /*background: linear-gradient(#edf0f1, #48aec0, #050e4f);*/
+    background: linear-gradient(#edf0f1, #42c9e3, #2c85ec, #1f58d0, #050e4f);
+}
+
+main, header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headBar {
+    display: flex;
+    background: linear-gradient(#9198e5, #edf0f1);
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 30px;
+}
+
+
 .container {
     text-align: center;
     margin-top: 50px;
@@ -19,10 +39,11 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background: rgba(238, 245, 241, 0.96);
 }
 
 .cell:hover {
-    background-color: #f0f0f0;
+    background-color: #5aefef;
 }
 
 #status {

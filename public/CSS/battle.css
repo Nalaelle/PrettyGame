@@ -5,15 +5,28 @@
 }
 
 main {
-    /*background: linear-gradient(#edf0f1, #48aec0, #050e4f);*/
     background: linear-gradient(#edf0f1, #48aec0, #1156a2, #183d8c, #050e4f);
 }
 
-#playerOne,
-#playerTwo {
-    height: 500px;
-    width: 500px;
-    background: rgb(0, 191, 255);
+main, header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headBar {
+    display: flex;
+    background: linear-gradient(#9198e5, #edf0f1);
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 30px;
+}
+
+
+#gridPlayerOne,
+#gridPlayerTwo {
+    position: relative;
+
 }
 
 #grid {
@@ -21,7 +34,6 @@ main {
     gap: 50px;
     flex-flow: row wrap;
     margin: 20px;
-
 }
 
 table {
@@ -48,25 +60,15 @@ td {
     /*box-sizing: unset;*/
 }
 
-#gridPlayerOne > span,
-#gridPlayerTwo > span, .btn {
-    display: flex;
-    font-size: 14px;
-    margin: 10px;
-    /*margin-top: 10px;*/
-    /*margin-bottom: 10px;*/
-    background: rgba(30, 115, 229, 0.65);
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-}
-
 .btn {
+    /*display: flex;*/
     display: inline;
+    font-size: 14px;
     cursor: pointer;
     color: #FFF;
     justify-content: center;
-    margin: 10px;
+    margin: 55px 10px 10px 10px;
+    padding: 10px;
     background: rgba(107, 40, 183, 0.85);
     border: none;
     border-radius: 25px;
@@ -78,14 +80,9 @@ td {
     box-shadow: 3px 3px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-/*.score {*/
-/*    width: 100%;*/
-/*    margin: 15px;*/
-/*    color: #b006c7;*/
-/*    font-size: 1.5em;*/
-/*    text-align: center;*/
-/*    font-weight: bold;*/
-/*}*/
+.score {
+    margin: 7px
+}
 
 .playerGrid {
     padding: 15px;
@@ -94,3 +91,37 @@ td {
     align-items: center;
     justify-content: center;
 }
+
+.inputBox {
+    position: relative;
+    width: 250px;
+}
+
+.username {
+    border: none;
+    border-radius: 20px;
+    color: rgb(110, 13, 231);
+    margin: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 3px 2px 3px 10px;
+    background: rgba(29, 123, 175, 0.98);
+    justify-content: center;
+
+    position: absolute;
+    top: 0;
+    left: 16px;
+}
+
+.username:hover, .username:focus, .username:active {
+    outline: none;
+    background: rgba(25, 157, 187, 0.98);
+}
+
+
+
+
+
+
+

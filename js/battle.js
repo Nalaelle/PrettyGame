@@ -8,8 +8,7 @@ function createGrid(player, grid, id) {
     // Création de la table et de son thead
     const playerGrid = document.createElement('div');
     playerGrid.classList.add('playerGrid');
-    const playerName = document.createElement('h2');
-    playerName.textContent = player.name;
+
     const score = document.createElement('p');
     score.textContent = `Score : ${player.score ?? 0}`;
     score.classList.add(`score`);
@@ -52,7 +51,6 @@ function createGrid(player, grid, id) {
     playerGrid.appendChild(score)
     table.appendChild(tbody);
     gridOfDom.appendChild(playerGrid);
-    playerGrid.appendChild(playerName);
     playerGrid.appendChild(table);
 }
 
@@ -305,8 +303,11 @@ function hideBoat(grid, player, hideBoatOne) {
 }
 
 function play() {
-    let namePlayerOne = prompt('Entrez votre nom Joueur 1') ?? 'Joueur1'
-    let namePlayerTwo = prompt('Entrez votre nom Joueur 2') ?? 'Joueur2'
+    const namePlayerOne = 'Joueur1'
+    const namePlayerTwo = 'Joueur2'
+    // let namePlayerOne = prompt('Entrez votre nom Joueur 1') ?? 'Joueur1'
+    // let namePlayerTwo = prompt('Entrez votre nom Joueur 2') ?? 'Joueur2'
+
 
     // ** INSTANCES GAMES  ** //
     createGrid({name: namePlayerOne}, 'gridPlayerOne', 1);
@@ -315,6 +316,16 @@ function play() {
 
     let playerOne = new Player(1, namePlayerOne, 0, [], false, false);
     let playerTwo = new Player(2, namePlayerTwo, 0, [], false, false);
+
+    const nOne = document.getElementById('namePlayerOne')
+    const nTwo = document.getElementById('namePlayerTwo')
+    nOne.addEventListener('input', (e) => {
+        playerOne.name = e.target.value
+    })
+    nTwo.addEventListener('input', (e) => {
+        playerTwo.name = e.target.value
+    })
+
 
     const userGridOne = document.getElementById('gridPlayerOne');
     const userGridTwo = document.getElementById('gridPlayerTwo');

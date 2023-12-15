@@ -37,10 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
             e.target.textContent = currentPlayer;
             const winner = checkWin();
             if (winner) {
-                status.textContent = winner === 'Equals' ? 'Dommage!' : `Joueur ${winner} à gagné!`;
+                status.textContent = winner === 'Equals' ? 'Égalité !' : `Joueur ${winner} à gagné!`;
             } else {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                status.textContent = `c'est à joueur ${currentPlayer}`;
+                status.textContent = `C'est à joueur ${currentPlayer}`;
             }
         }
     };
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         currentPlayer = 'X';
         gameActive = true;
         gameState = ['', '', '', '', '', '', '', '', ''];
-        status.textContent = `c'est à joueur ${currentPlayer}`;
+        status.textContent = `C'est à joueur ${currentPlayer}`;
         cells.forEach(cell => {
             cell.textContent = '';
         });
