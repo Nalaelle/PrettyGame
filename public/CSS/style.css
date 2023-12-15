@@ -18,7 +18,8 @@ ul {
 
 .bloc-page {
     overflow-x: clip;
-    background: linear-gradient(#9198e5, #fafafa);
+    /*background: linear-gradient(#9198e5, #fafafa);*/
+
 }
 
 
@@ -45,7 +46,7 @@ img {
 
 
 main {
-    height: 140vh;
+    height: 200vh;
 }
 
 .menu > ul {
@@ -60,7 +61,7 @@ main {
 
 .menu > ul > li:hover {
     /*color: #073ca6;*/
-    color: rgba(107, 40, 183, 0.85);
+    color: rgb(4, 189, 32);
 }
 
 

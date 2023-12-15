@@ -4,8 +4,16 @@
     padding: 0;
 }
 
-main {
-    background: linear-gradient(#edf0f1, #48aec0, #1156a2, #183d8c, #050e4f);
+main, header {
+    /*background: linear-gradient(#edf0f1, #48aec0, #1156a2, #183d8c, #050e4f);*/
+    /*linear-gradient(150deg, #edf0f1, #48aec0, #1156a2, #183d8c 70.71%),  linear-gradient(150deg, #edf0f1, #1156a2 70.71%),*/
+    /*background: linear-gradient(238deg, rgba(0, 0, 255, .8), rgba(0, 0, 255, 0) 70.71%),*/
+    /*linear-gradient(217deg, rgba(255, 0, 0, .8), rgba(255, 0, 0, 0) 70.71%),*/
+    /*linear-gradient(127deg, rgba(0, 255, 0, .8), rgba(0, 255, 0, 0) 70.71%);*/
+
+    background: linear-gradient(238deg, rgba(0, 0, 255, .8), rgba(0, 0, 255, 0) 70.71%),
+    linear-gradient(290deg, rgba(255, 0, 0, .8), rgba(255, 0, 0, 0) 70.71%),
+    linear-gradient(92deg, rgba(0, 255, 0, .8), rgba(0, 255, 0, 0) 70.71%);
 }
 
 main, header {
@@ -16,7 +24,7 @@ main, header {
 
 .headBar {
     display: flex;
-    background: linear-gradient(#9198e5, #edf0f1);
+    /*background: linear-gradient(#9198e5, #edf0f1);*/
     justify-content: space-between;
     width: 100%;
     padding: 10px 30px;
@@ -42,10 +50,10 @@ table {
 
 th,
 td {
-    border: 2px solid #e3dada;
+    border: 2px solid #1c1b1b;
     padding: 8px;
     text-align: center;
-    color: #e3dada;
+    color: #211f1f;
 }
 
 .cell:hover {
@@ -106,17 +114,18 @@ td {
     font-weight: bold;
     cursor: pointer;
     padding: 3px 2px 3px 10px;
-    background: rgba(29, 123, 175, 0.98);
+    background: rgba(25, 157, 187, 0.98);
+    width: 150px;
     justify-content: center;
 
     position: absolute;
     top: 0;
-    left: 16px;
+    left: 60px;
 }
 
 .username:hover, .username:focus, .username:active {
     outline: none;
-    background: rgba(25, 157, 187, 0.98);
+    background: rgba(29, 123, 175, 0.98);
 }
 
 
