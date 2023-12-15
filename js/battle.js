@@ -239,9 +239,11 @@ function checkFlow(playerTarget, letterOfCurrentBoat) {
 
 // Vérifie si la cible est touché
 function checkTargetShot(pos, playerTarget) {
+    console.log(playerTarget.gridofPos)
     for (let i in playerTarget.gridofPos) {
         for (let j in playerTarget.gridofPos[i]) {
             const test = [parseFloat(i), parseInt(j)]
+            console.log(test, pos)
             if (playerTarget.gridofPos[i][j] !== 0 && (test[0] === pos[0] && test[1] === pos[1])) {
                 // console.log('Touché la cible')
                 return playerTarget.gridofPos[i][j]
@@ -262,7 +264,7 @@ function shot(playerShooter, playerTarget, gridOfTargetDom) {
         if ((cell.classList.contains(`cell${playerTarget.id}`)) && (turn === 1)) {
             turn = 0
             let posRow = parseInt(cell.parentElement.classList[0].slice(-1)); // Position de la ligne
-            let posCol = parseInt(cell.classList[2].slice(-1)); // Position de la colonne
+            let posCol = parseInt(cell.classList[3].slice(-1)); // Position de la colonne
             const pos = [posRow, posCol];
             let S = 0;
 
